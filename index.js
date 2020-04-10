@@ -29,8 +29,9 @@ return inquirer
             name: "description"
         },
         {
-            type: "checklist",
+            type: "checkbox",
             message: "Please provide a table of contents:",
+            choices:["* [Installation](#installation)","* [Usage](#usage)","* [Credits](#credits)","* [License](#license)", "* [Badges](#badges)","* [Contributors](#contributors)"],
             name: "contents"
         },
         {
@@ -76,58 +77,96 @@ function writeToFile(fileData) {
 }
 
 
-// fs.writeFile("README_.md", generateREADME())
 
 
 
 function generateREADME(answers) {
+    // const queryUrl = 'https://api.github.com/users/${answers.username}/'
+    // axios.get(queryUrl).then(function(res){
+
+    //     return(res.avatar_url)
+    // }
+
     return `
 
 # ${answers.repo} by ${answers.username}
 
-# Your Project Title
-    ${answers.title}
+# ${answers.title} 
 
 ## Description 
-    ${answers.description}
+${answers.description}
 
 ## Table of Contents (Optional)
-    ${answers.contents[0]} \n
-    ${answers.contents[1]} \n
-    ${answers.contents[2]} \n
-    ${answers.contents[3]} \n
-    ${answers.contents[4]} \n
+${answers.contents[0]} \n
+${answers.contents[1]} \n
+${answers.contents[2]} \n
+${answers.contents[3]} \n
+${answers.contents[4]} \n
+${answers.contents[5]} \n
 
 ## Installation
-    ${answers.installation}
+${answers.installation}
 
 
 ## Usage 
-    ${answers.usage}
+${answers.usage}
 
 ## Credits
-    ${answers.credits}
+${answers.credits}
 
 ## License
-    ${answers.license}
+${answers.license}
 
 ## Badges
-    ${answers.badges}
+${answers.badges}
 
 ## Contributing
-    ${answers.contributing}
+${answers.contributing}
 
 `}
 
-promptUser()
-    .then(function (answers) {
-        const txt = generateREADME(answers);
+// promptUser()
+//     .then(function (answers) {
+//         const txt = generateREADME(answers);
 
-        return writeFileAsync("README_.md", txt);
-    })
-    .then(function () {
-        console.log("Successfully wrote to README_.md");
-    })
-    .catch(function (err) {
+//         return writeFileAsync("README_.md", txt);
+//     })
+//     .then(function () {
+//         console.log("Successfully wrote to README_.md");
+//     })
+//     .catch(function (err) {
+//         console.log(err);
+//     });
+
+    promptUser()
+    .then(
+        async function (answers) {
+        try{
+        const { username, repo, title, description, contents, installation, usage, credits, license, badges, contributing } = answers;
+        const avatar = await githubData(username);
+        return generateREADME(username, repo, title, description, contents, installation, usage, credits, license, badges, contributing, avatar);
+    } catch (err) {
         console.log(err);
+    }
+}
+    )
+    // .then (function(text) {
+    //     writeFileAsync("README_.md", text, "utf8");
+    // })
+    .catch(function(text) {
+        console.log(err);
+    }
+    );
+    function GithubData(username) {
+        const avatar_url = await
+        const queryUrl = 'https://api.github.com/search/users?q=${username}';
+
+        return axios
+        .get(queryUrl)
+        .then(function (response){
+            const { avatar_url } = response.data.items[0];
+            return avatar_url;
     });
+}
+    // Copyright (c) 2020 Karsus7
+    //https://img.shields.io/appveyor/build/Karsus7/Homework1

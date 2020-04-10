@@ -2,40 +2,37 @@
 
 # Homework1 by Karsus7
 
-# Your Project Title
-    Homework1
+# Homework1
 
 ## Description 
-    NA
+NA
 
 ## Table of Contents (Optional)
-    N 
+* [Installation](#installation) 
 
-    A 
+* [Usage](#usage) 
 
-    undefined 
+* [Credits](#credits) 
 
-    undefined 
-
-    undefined 
+* [License](#license) 
 
 
 ## Installation
-    NA
+NA
 
 
 ## Usage 
-    NA
+na
 
 ## Credits
-    NA
+Sergio
 
 ## License
-    NA
+MIT License copyright(c)2020 William Broussard
 
 ## Badges
-    NA
+na
 
 ## Contributing
-    NA
+na
 
