@@ -4,7 +4,7 @@
 <img src="https://avatars3.githubusercontent.com/u/61363843?v=4" height="75" width="75"> 
 
 ## Description
-na 
+My first Homework assignment. 
 
 ## Table of Contents
 * [Installation](#installation) 
@@ -22,15 +22,15 @@ na
 * [Questions](#questions) 
 
 ## Installation
-na
+git clone the repository.
 ## Usage
-na
+run index.html after cloned.
 ## License
 MIT
 ## Contributors
-na
+NA
 ## Tests
 undefined
 ## Questions
 
-na
+Any questions?
