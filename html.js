@@ -4,6 +4,7 @@ function makeHTML(data, gitData){
         let[label, message] = badge.split(",")
         badgeString+=`![${label}badge](https://img.shields.io/static/v1?label=${label}&message=${message.split(" ").join("%20")}&color=success)`;
     }
+    //markdown code in js files requires "`" before and after. See activity 09-NodeJS activity 24
 return `
 # ${data.repo} ${badgeString}
 # by ${data.username} 

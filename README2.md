@@ -1,6 +1,6 @@
 
-# na ![nabadge](https://img.shields.io/static/v1?label=na&message=na&color=success)
-# by karsus7 
+# Homework1 ![testbadge](https://img.shields.io/static/v1?label=test&message=test&color=success)
+# by Karsus7 
 <img src="https://avatars3.githubusercontent.com/u/61363843?v=4" height="75" width="75"> 
 
 ## Description

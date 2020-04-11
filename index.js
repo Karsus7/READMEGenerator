@@ -1,12 +1,17 @@
+//GLobal variables, programs in json package
 const fs = require("fs");
 const inquirer = require('inquirer');
 const util = require("util");
 const axios = require("axios");
 const readme = require("./html.js")
 
+// See 09-NodeJS activities 33, and  40
 const writeFileAsync = util.promisify(fs.writeFile);
 
-const questions = [
+// Get question answers as seen in 09-NodeJS activity 40
+    function promptUser(){
+        return inquirer
+        .prompt([
         {
             type: "input",
             message: "Enter your github username:",
@@ -50,8 +55,6 @@ const questions = [
             name: 'license',
             choices:[
                 "MIT",
-                "mpl 2.0",
-                "Boost Software License",
                 "Unlicense"
             ]
         },
@@ -76,40 +79,35 @@ const questions = [
             name: "questions"
         }
 
-    ]
-
-// get question answers
-function promptUser(){
-    return inquirer
-    .prompt(
-        questions
-    )
+    ]);
 }
 
-
+// See activity 09-NodeJS activity 40
         async function init () {
     try{
                 // "await" prevents early activation
         const data = await promptUser();
         const queryUrl = `https://api.github.com/users/${data.username}`;
         
-        //make call to github api
+        //make call to github api. See activity 09-NodeJS activity 33
         const gitData = await axios
         .get(queryUrl).then(function (response){
-        //return the img
+        //Axios returns the img from profile. See activity 09-NodeJS activity 33
             const{avatar_url} = response.data;
             return {avatar_url};
         })
 
-
+// Puts answers into README2.md
         const site = readme.make(data, gitData);
         await writeFileAsync("README2.md", site, "utf8");
         console.log("Succsessfully wrote file");
+        //confirm success
     }
     catch (err){
         return console.log(err);
     }
 }
+//above (err) identifies errors in program. See activity 09-NodeJS activity 33
 
-
+//Placed at the bottom to initiate async function. See activity 09-NodeJS activity 40
 init();
