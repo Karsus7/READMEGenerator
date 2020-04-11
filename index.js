@@ -1,13 +1,12 @@
-const fs = require('fs');
+const fs = require("fs");
 const inquirer = require('inquirer');
-const util = require('util');
-const axios = require('axios');
+const util = require("util");
+const axios = require("axios");
+const readme = require("./html.js")
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
-function promptUser() {
-return inquirer
-    .prompt([
+const questions = [
         {
             type: "input",
             message: "Enter your github username:",
@@ -20,18 +19,14 @@ return inquirer
         },
         {
             type: "input",
-            message: "What is the title of the project?",
-            name: "title"
-        },
-        {
-            type: "input",
             message: "Please provide a description for the project:",
             name: "description"
         },
         {
             type: "checkbox",
             message: "Please provide a table of contents:",
-            choices:["* [Installation](#installation)","* [Usage](#usage)","* [Credits](#credits)","* [License](#license)", "* [Badges](#badges)","* [Contributors](#contributors)"],
+            choices:["* [Installation](#installation)","* [Usage](#usage)","* [Credits](#credits)","* [License](#license)","* [Contributors](#contributors)",
+            "* [Testing](#testing)","* [Questions](#questions)",],
             name: "contents"
         },
         {
@@ -50,13 +45,19 @@ return inquirer
             name: "credits"
         },
         {
-            type: "input",
-            message: "Please provide any licenses you wish to use:",
-            name: "license"
+            type:"list",
+            message:"Enter information about your licensing: ",
+            name: 'license',
+            choices:[
+                "MIT",
+                "mpl 2.0",
+                "Boost Software License",
+                "Unlicense"
+            ]
         },
         {
             type: "input",
-            message: "Please provide any badges you wish to use:",
+            message: "Please provide any badges you wish to use (formatting: 'label,message')",
             name: "badges"
         },
         {
@@ -64,109 +65,51 @@ return inquirer
             message: "Please add any guidelines for how, or if you want others to contribute to this project:",
             name: "contributing"
         },
-
-    ])}
-
-function writeToFile(fileData) {
-    fs.writeFile("README_.md", fileData, function (err) {
-        if (err) {
-            return console.log(err);
+        {
+            type: "input",
+            message:"Please explain how this project was tested: ",
+            name: "testing"
+        },
+        {
+            type: "input",
+            message: "Feel free to type any additional questions: ",
+            name: "questions"
         }
-        console.log("SUCCESS");
-    })
-}
 
+    ]
 
-
-
-
-function generateREADME(answers) {
-    // const queryUrl = 'https://api.github.com/users/${answers.username}/'
-    // axios.get(queryUrl).then(function(res){
-
-    //     return(res.avatar_url)
-    // }
-
-    return `
-
-# ${answers.repo} by ${answers.username}
-
-# ${answers.title} 
-
-## Description 
-${answers.description}
-
-## Table of Contents (Optional)
-${answers.contents[0]} \n
-${answers.contents[1]} \n
-${answers.contents[2]} \n
-${answers.contents[3]} \n
-${answers.contents[4]} \n
-${answers.contents[5]} \n
-
-## Installation
-${answers.installation}
-
-
-## Usage 
-${answers.usage}
-
-## Credits
-${answers.credits}
-
-## License
-${answers.license}
-
-## Badges
-${answers.badges}
-
-## Contributing
-${answers.contributing}
-
-`}
-
-// promptUser()
-//     .then(function (answers) {
-//         const txt = generateREADME(answers);
-
-//         return writeFileAsync("README_.md", txt);
-//     })
-//     .then(function () {
-//         console.log("Successfully wrote to README_.md");
-//     })
-//     .catch(function (err) {
-//         console.log(err);
-//     });
-
-    promptUser()
-    .then(
-        async function (answers) {
-        try{
-        const { username, repo, title, description, contents, installation, usage, credits, license, badges, contributing } = answers;
-        const avatar = await githubData(username);
-        return generateREADME(username, repo, title, description, contents, installation, usage, credits, license, badges, contributing, avatar);
-    } catch (err) {
-        console.log(err);
-    }
-}
+// get question answers
+function promptUser(){
+    return inquirer
+    .prompt(
+        questions
     )
-    // .then (function(text) {
-    //     writeFileAsync("README_.md", text, "utf8");
-    // })
-    .catch(function(text) {
-        console.log(err);
-    }
-    );
-    function GithubData(username) {
-        const avatar_url = await
-        const queryUrl = 'https://api.github.com/search/users?q=${username}';
-
-        return axios
-        .get(queryUrl)
-        .then(function (response){
-            const { avatar_url } = response.data.items[0];
-            return avatar_url;
-    });
 }
-    // Copyright (c) 2020 Karsus7
-    //https://img.shields.io/appveyor/build/Karsus7/Homework1
+
+
+        async function init () {
+    try{
+                // "await" prevents early activation
+        const data = await promptUser();
+        const queryUrl = `https://api.github.com/users/${data.username}`;
+        
+        //make call to github api
+        const gitData = await axios
+        .get(queryUrl).then(function (response){
+        //return the img
+            const{avatar_url} = response.data;
+            return {avatar_url};
+        })
+
+
+        const site = readme.make(data, gitData);
+        await writeFileAsync("README2.md", site, "utf8");
+        console.log("Succsessfully wrote file");
+    }
+    catch (err){
+        return console.log(err);
+    }
+}
+
+
+init();
