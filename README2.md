@@ -1,10 +1,10 @@
 
 # Homework1 ![testbadge](https://img.shields.io/static/v1?label=test&message=test&color=success)
 # by Karsus7 
-<img src="https://avatars3.githubusercontent.com/u/61363843?v=4" height="75" width="75"> 
+<img src="https://avatars3.githubusercontent.com/u/61363843?v=4" height="50" width="50"> 
 
 ## Description
-My first Homework assignment. 
+na 
 
 ## Table of Contents
 * [Installation](#installation) 
@@ -22,15 +22,15 @@ My first Homework assignment.
 * [Questions](#questions) 
 
 ## Installation
-git clone the repository.
+na
 ## Usage
-run index.html after cloned.
+na
 ## License
 MIT
 ## Contributors
-NA
+na
 ## Tests
 undefined
 ## Questions
 
-Any questions?
+na

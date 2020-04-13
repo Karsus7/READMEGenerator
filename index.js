@@ -60,7 +60,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
         },
         {
             type: "input",
-            message: "Please provide any badges you wish to use (formatting: 'label,message')",
+            message: "Please provide any badges you wish to use (must be formatted in the following way: 'label,message')",
             name: "badges"
         },
         {
@@ -85,7 +85,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
 // See activity 09-NodeJS activity 40
         async function init () {
     try{
-                // "await" prevents early activation
+        // "await" prevents activation before prompts have been answered.
         const data = await promptUser();
         const queryUrl = `https://api.github.com/users/${data.username}`;
         
@@ -97,7 +97,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
             return {avatar_url};
         })
 
-// Puts answers into README2.md
+// Puts answers into README2.md with data pulled from html.js. Specifically from the module.exports line.
         const site = readme.make(data, gitData);
         await writeFileAsync("README2.md", site, "utf8");
         console.log("Succsessfully wrote file");

@@ -1,14 +1,15 @@
 function makeHTML(data, gitData){
-    badgeString = "";
+    badgeS = "";
     for (const badge of data.badges.split(";")){
         let[label, message] = badge.split(",")
-        badgeString+=`![${label}badge](https://img.shields.io/static/v1?label=${label}&message=${message.split(" ").join("%20")}&color=success)`;
+        badgeS+=`![${label}badge](https://img.shields.io/static/v1?label=${label}&message=${message.split(" ").join("%20")}&color=success)`;
     }
     //markdown code in js files requires "`" before and after. See activity 09-NodeJS activity 24
+    //note that this markdown code uses jquery.
 return `
-# ${data.repo} ${badgeString}
+# ${data.repo} ${badgeS}
 # by ${data.username} 
-<img src="${gitData.avatar_url}" height="75" width="75"> \n
+<img src="${gitData.avatar_url}" height="50" width="50"> \n
 ## Description
 ${data.description} \n
 ## Table of Contents
@@ -35,6 +36,7 @@ ${data.questions}
 `;
 }
 
+//module.exports allowss the entire makeHTML function to convert it's code into a README.md file.
 module.exports = {
     make: (data, gitData)=>makeHTML(data, gitData)
 }
