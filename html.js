@@ -36,7 +36,7 @@ ${data.questions}
 `;
 }
 
-//module.exports allowss the entire makeHTML function to convert it's code into a README.md file.
+//module.exports allows the "make" property in index.js to access the data from the makeHTML function above.
 module.exports = {
     make: (data, gitData)=>makeHTML(data, gitData)
 }

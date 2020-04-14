@@ -5,7 +5,9 @@ const util = require("util");
 const axios = require("axios");
 const readme = require("./html.js")
 
-// See 09-NodeJS activities 33, and  40
+// See 09-NodeJS activities 33, and 40
+// "promisify" holds the fs.writeFile until the necessary functions have been run.
+// The line below defines the writeFileAsync below in the Async function.
 const writeFileAsync = util.promisify(fs.writeFile);
 
 // Get question answers as seen in 09-NodeJS activity 40
@@ -92,7 +94,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
         //make call to github api. See activity 09-NodeJS activity 33
         const gitData = await axios
         .get(queryUrl).then(function (response){
-        //Axios returns the img from profile. See activity 09-NodeJS activity 33
+        //Axios returns the img from teh github profile. See activity 09-NodeJS activity 33
             const{avatar_url} = response.data;
             return {avatar_url};
         })
